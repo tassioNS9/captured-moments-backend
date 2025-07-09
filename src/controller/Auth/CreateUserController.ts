@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { CreateUserService } from "../service/CreateUserService";
+import { CreateUserService } from "../../service/Auth/CreateUserService";
 
 class CreateUserController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
@@ -10,7 +10,7 @@ class CreateUserController {
     };
 
     if (!fullName || !email || !password) {
-      reply.status(400).send({ message: "Todos os campos são requiridos" });
+      reply.status(400).send({ message: "All fields are required" });
     }
 
     try {
@@ -21,7 +21,7 @@ class CreateUserController {
         email,
         password,
       });
-      reply.send(user);
+      return reply.status(201).send(user);
     } catch (error: any) {
       return reply.status(400).send({ error: true, message: error.message });
     }
