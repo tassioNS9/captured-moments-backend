@@ -6,6 +6,8 @@ import { GetUserController } from "./controller/Auth/GetUserController";
 import { authenticateToken } from "./middleware/authenticateToke";
 import { AddMomentsController } from "./controller/Moments/AddMomentsController";
 import { GetAllMomentsController } from "./controller/Moments/GetAllMomentsController";
+import { SearchMomentsController } from "./controller/Moments/SearchMomentsController";
+import { UpdateMomentsController } from "./controller/Moments/UpdateMomentsController";
 
 export function routes(fastify: FastifyInstance) {
   fastify.post(
@@ -46,6 +48,24 @@ export function routes(fastify: FastifyInstance) {
     { preHandler: authenticateToken },
     async (request: FastifyRequest, reply: FastifyReply) => {
       return new GetAllMomentsController().handle(request, reply);
+    }
+  );
+
+  // MOMENT: BUSCAR POR TERMOS
+  fastify.get(
+    "/search",
+    { preHandler: authenticateToken },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return new SearchMomentsController().handle(request, reply);
+    }
+  );
+
+  // MOMENT: BUSCAR POR TERMOS
+  fastify.put(
+    "/edit-moments/:id",
+    { preHandler: authenticateToken },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return new UpdateMomentsController().handle(request, reply);
     }
   );
 }
