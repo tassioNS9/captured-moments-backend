@@ -12,6 +12,7 @@ import { UploadFileController } from "./controller/Upload/UploadFileController";
 import { DeleteFileController } from "./controller/Upload/DeleteFileController";
 import { DeleteMomentsController } from "./controller/Moments/DeleteMomentsController";
 import { UpdateIsFavoriteMomentsController } from "./controller/Moments/UpdateIsFavoriteController";
+import { DateFilterMomentsController } from "./controller/Moments/DateFilterController";
 
 export function routes(fastify: FastifyInstance) {
   fastify.post(
@@ -91,5 +92,10 @@ export function routes(fastify: FastifyInstance) {
    // MOMENT: ATUALIZAR OS FAVORITOS DO MOMENTO
   fastify.put('/update-is-favorite/:id', { preHandler: authenticateToken}, async (request: FastifyRequest, reply: FastifyReply) => {
     return new  UpdateIsFavoriteMomentsController().handle(request, reply)
+  })
+
+   // MOMENT: FILTRO DE MOMENTOS
+  fastify.get('/registered-moment/filter', { preHandler: authenticateToken}, async (request: FastifyRequest, reply: FastifyReply) => {
+    return new  DateFilterMomentsController().handle(request, reply)
   })
 }
