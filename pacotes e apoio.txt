@@ -1,0 +1,2 @@
+npm i fastify-multer @fastify/multipart ==> para instalação do multer
+npm i @types/multer -D ==> multer para typescript

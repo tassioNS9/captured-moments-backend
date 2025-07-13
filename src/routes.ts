@@ -1,13 +1,14 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { CreateUserController } from "./controller/Auth/CreateUserController";
 import { LoginUserController } from "./controller/Auth/LoginUserController";
-
+import { upload } from "./config/multer";
 import { GetUserController } from "./controller/Auth/GetUserController";
 import { authenticateToken } from "./middleware/authenticateToke";
 import { AddMomentsController } from "./controller/Moments/AddMomentsController";
 import { GetAllMomentsController } from "./controller/Moments/GetAllMomentsController";
 import { SearchMomentsController } from "./controller/Moments/SearchMomentsController";
 import { UpdateMomentsController } from "./controller/Moments/UpdateMomentsController";
+import { UploadFileController } from "./controller/Upload/UploadFileController";
 
 export function routes(fastify: FastifyInstance) {
   fastify.post(
@@ -68,4 +69,9 @@ export function routes(fastify: FastifyInstance) {
       return new UpdateMomentsController().handle(request, reply);
     }
   );
+
+   // UPLOAD: ADICIONAR IMAGEM
+  fastify.post('/image-upload', {preHandler: upload.single("image")}, async (request: FastifyRequest, reply: FastifyReply) => {
+    return new UploadFileController().handle(request, reply)
+  })
 }
