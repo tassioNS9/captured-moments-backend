@@ -10,6 +10,7 @@ import { SearchMomentsController } from "./controller/Moments/SearchMomentsContr
 import { UpdateMomentsController } from "./controller/Moments/UpdateMomentsController";
 import { UploadFileController } from "./controller/Upload/UploadFileController";
 import { DeleteFileController } from "./controller/Upload/DeleteFileController";
+import { DeleteMomentsController } from "./controller/Moments/DeleteMomentsController";
 
 export function routes(fastify: FastifyInstance) {
   fastify.post(
@@ -70,6 +71,11 @@ export function routes(fastify: FastifyInstance) {
       return new UpdateMomentsController().handle(request, reply);
     }
   );
+  
+   // MOMENT: DELETAR MOMENTO
+  fastify.delete('/delete-moment/:id', { preHandler: authenticateToken}, async (request: FastifyRequest, reply: FastifyReply) => {
+    return new DeleteMomentsController().handle(request, reply)
+  })
 
    // UPLOAD: ADICIONAR IMAGEM
   fastify.post('/image-upload', {preHandler: upload.single("image")}, async (request: FastifyRequest, reply: FastifyReply) => {
