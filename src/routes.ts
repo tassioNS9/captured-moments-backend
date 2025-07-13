@@ -9,6 +9,7 @@ import { GetAllMomentsController } from "./controller/Moments/GetAllMomentsContr
 import { SearchMomentsController } from "./controller/Moments/SearchMomentsController";
 import { UpdateMomentsController } from "./controller/Moments/UpdateMomentsController";
 import { UploadFileController } from "./controller/Upload/UploadFileController";
+import { DeleteFileController } from "./controller/Upload/DeleteFileController";
 
 export function routes(fastify: FastifyInstance) {
   fastify.post(
@@ -73,5 +74,10 @@ export function routes(fastify: FastifyInstance) {
    // UPLOAD: ADICIONAR IMAGEM
   fastify.post('/image-upload', {preHandler: upload.single("image")}, async (request: FastifyRequest, reply: FastifyReply) => {
     return new UploadFileController().handle(request, reply)
+  })
+
+    // UPLOAD: DELETAR IMAGEM
+  fastify.delete('/delete-upload', {preHandler: upload.single("image")}, async (request: FastifyRequest, reply: FastifyReply) => {
+    return new DeleteFileController().handle(request, reply)
   })
 }
