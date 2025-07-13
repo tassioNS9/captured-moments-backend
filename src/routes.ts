@@ -11,6 +11,7 @@ import { UpdateMomentsController } from "./controller/Moments/UpdateMomentsContr
 import { UploadFileController } from "./controller/Upload/UploadFileController";
 import { DeleteFileController } from "./controller/Upload/DeleteFileController";
 import { DeleteMomentsController } from "./controller/Moments/DeleteMomentsController";
+import { UpdateIsFavoriteMomentsController } from "./controller/Moments/UpdateIsFavoriteController";
 
 export function routes(fastify: FastifyInstance) {
   fastify.post(
@@ -85,5 +86,10 @@ export function routes(fastify: FastifyInstance) {
     // UPLOAD: DELETAR IMAGEM
   fastify.delete('/delete-upload', {preHandler: upload.single("image")}, async (request: FastifyRequest, reply: FastifyReply) => {
     return new DeleteFileController().handle(request, reply)
+  })
+
+   // MOMENT: ATUALIZAR OS FAVORITOS DO MOMENTO
+  fastify.put('/update-is-favorite/:id', { preHandler: authenticateToken}, async (request: FastifyRequest, reply: FastifyReply) => {
+    return new  UpdateIsFavoriteMomentsController().handle(request, reply)
   })
 }
