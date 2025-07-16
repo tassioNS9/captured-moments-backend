@@ -12,7 +12,7 @@ import { UploadFileController } from "./controller/Upload/UploadFileController";
 import { DeleteFileController } from "./controller/Upload/DeleteFileController";
 import { DeleteMomentsController } from "./controller/Moments/DeleteMomentsController";
 import { UpdateIsFavoriteMomentsController } from "./controller/Moments/UpdateIsFavoriteController";
-import { DateFilterMomentsController } from "./controller/Moments/DateFilterController";
+import { DateFilterMomentsController } from "./controller/Moments/DateFilterMomentsController";
 
 export function routes(fastify: FastifyInstance) {
   fastify.post(
@@ -73,29 +73,49 @@ export function routes(fastify: FastifyInstance) {
       return new UpdateMomentsController().handle(request, reply);
     }
   );
-  
-   // MOMENT: DELETAR MOMENTO
-  fastify.delete('/delete-moment/:id', { preHandler: authenticateToken}, async (request: FastifyRequest, reply: FastifyReply) => {
-    return new DeleteMomentsController().handle(request, reply)
-  })
 
-   // UPLOAD: ADICIONAR IMAGEM
-  fastify.post('/image-upload', {preHandler: upload.single("image")}, async (request: FastifyRequest, reply: FastifyReply) => {
-    return new UploadFileController().handle(request, reply)
-  })
+  // MOMENT: DELETAR MOMENTO
+  fastify.delete(
+    "/delete-moment/:id",
+    { preHandler: authenticateToken },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return new DeleteMomentsController().handle(request, reply);
+    }
+  );
 
-    // UPLOAD: DELETAR IMAGEM
-  fastify.delete('/delete-upload', {preHandler: upload.single("image")}, async (request: FastifyRequest, reply: FastifyReply) => {
-    return new DeleteFileController().handle(request, reply)
-  })
+  // UPLOAD: ADICIONAR IMAGEM
+  fastify.post(
+    "/image-upload",
+    { preHandler: upload.single("image") },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return new UploadFileController().handle(request, reply);
+    }
+  );
 
-   // MOMENT: ATUALIZAR OS FAVORITOS DO MOMENTO
-  fastify.put('/update-is-favorite/:id', { preHandler: authenticateToken}, async (request: FastifyRequest, reply: FastifyReply) => {
-    return new  UpdateIsFavoriteMomentsController().handle(request, reply)
-  })
+  // UPLOAD: DELETAR IMAGEM
+  fastify.delete(
+    "/delete-upload",
+    { preHandler: upload.single("image") },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return new DeleteFileController().handle(request, reply);
+    }
+  );
 
-   // MOMENT: FILTRO DE MOMENTOS
-  fastify.get('/registered-moment/filter', { preHandler: authenticateToken}, async (request: FastifyRequest, reply: FastifyReply) => {
-    return new  DateFilterMomentsController().handle(request, reply)
-  })
+  // MOMENT: ATUALIZAR OS FAVORITOS DO MOMENTO
+  fastify.put(
+    "/update-is-favorite/:id",
+    { preHandler: authenticateToken },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return new UpdateIsFavoriteMomentsController().handle(request, reply);
+    }
+  );
+
+  // MOMENT: FILTRO DE MOMENTOS
+  fastify.get(
+    "/registered-moment/filter",
+    { preHandler: authenticateToken },
+    async (request: FastifyRequest, reply: FastifyReply) => {
+      return new DateFilterMomentsController().handle(request, reply);
+    }
+  );
 }
