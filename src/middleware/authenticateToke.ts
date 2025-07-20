@@ -8,7 +8,6 @@ export async function authenticateToken(
   const authHeader = request.headers["authorization"];
   const token = authHeader?.split(" ")[1];
 
-  console.log(token, "token");
   if (!token) return reply.status(400).send({ message: "Token not provided" });
 
   try {
