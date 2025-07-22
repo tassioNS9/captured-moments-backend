@@ -9,7 +9,7 @@ const app = fastify({ logger: true });
 app.register(fastifyMultipart);
 app.register(routes);
 app.register(fastifyCors, {
-  methods: ["PUT"],
+  methods: ["PUT", "DELETE"],
 });
 app.register(fastifyStatic, {
   root: path.join(__dirname, "..", "uploads"),
