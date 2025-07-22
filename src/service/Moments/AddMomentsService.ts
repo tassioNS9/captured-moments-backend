@@ -18,7 +18,7 @@ class AddMomentsService {
     imageUrl,
     visitedDate,
   }: RegistredMomentProps) {
-    const parsedVisitedDate = new Date(parseInt(visitedDate));
+    const parsedVisitedDate = new Date(visitedDate);
 
     const placeholderImageUrl = `http://localhost:8000/uploads/image-default.png`;
 
