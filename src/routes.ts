@@ -13,6 +13,7 @@ import { DeleteFileController } from "./controller/Upload/DeleteFileController";
 import { DeleteMomentsController } from "./controller/Moments/DeleteMomentsController";
 import { UpdateIsFavoriteMomentsController } from "./controller/Moments/UpdateIsFavoriteController";
 import { DateFilterMomentsController } from "./controller/Moments/DateFilterMomentsController";
+import { GenerateIAController } from "./controller/IA/GenerateIAController";
 
 export function routes(fastify: FastifyInstance) {
   fastify.post(
@@ -118,4 +119,9 @@ export function routes(fastify: FastifyInstance) {
       return new DateFilterMomentsController().handle(request, reply);
     }
   );
+
+  // IA: INTEGRAÇÃO COM IA
+  fastify.post("/ia", async (request: FastifyRequest, reply: FastifyReply) => {
+    return new GenerateIAController().handle(request, reply);
+  });
 }
